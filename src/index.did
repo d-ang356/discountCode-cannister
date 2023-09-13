@@ -1,0 +1,29 @@
+type DiscountCode = record {
+  id : text;
+  value : text;
+  storeId : text;
+  createdAt : nat64;
+  updatedAt : opt nat64;
+};
+type DiscountCodePayload = record { value : text };
+type Store = record {
+  id : text;
+  title : text;
+  createdAt : nat64;
+  "type" : text;
+  updatedAt : opt nat64;
+  codeCount : float64;
+};
+type StorePayload = record { title : text; "type" : text };
+type _AzleResult = variant { Ok : Store; Err : text };
+type _AzleResult_1 = variant { Ok : DiscountCode; Err : text };
+type _AzleResult_2 = variant { Ok : vec DiscountCode; Err : text };
+service : () -> {
+  addStore : (StorePayload) -> (_AzleResult);
+  addStoreDiscountCode : (text, DiscountCodePayload) -> (_AzleResult_1);
+  deleteDiscount : (text) -> (_AzleResult_1);
+  deleteStore : (text) -> (_AzleResult);
+  getStore : (text) -> (_AzleResult) query;
+  getStoreDiscountCodes : (text) -> (_AzleResult_2) query;
+  updateStore : (text, StorePayload) -> (_AzleResult);
+}
